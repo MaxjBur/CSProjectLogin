@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.swing.*;
 import java.util.Scanner;
 import java.sql.*;
 
@@ -40,6 +41,10 @@ public class Main {
             }
         }
         System.out.println("MENU");
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(true);
+        window.setTitle("Game");
     }
 
     public static void writeToDatabase(String username, String password) throws SQLException {
