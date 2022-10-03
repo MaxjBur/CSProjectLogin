@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.sql.*;
 
 public class Main {
+    public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
 
     public static void main(String[] args) throws Exception {
         Connection con = DriverManager.getConnection("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
@@ -45,26 +46,68 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setTitle("Game");
+        GamePanel gamePanel = new GamePanel();
+        window.add(gamePanel);
+        window.pack();
+
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+
+        gamePanel.setupGame();
+        gamePanel.startGameThread();
+        System.out.println("Game");
+
     }
 
     public static void writeToDatabase(String username, String password) throws SQLException {
-        String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
 
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            String sql = "INSERT INTO userLogin (Username, Password) VALUES (?,?)";
+            String sql = "INSERT INTO userLogin (Username, Password, InGamePoints, TotalTimePlayed) VALUES (?,?,?,?)";
+//            String sql = "INSERT INTO userLogin (Username, Password) VALUES (?,?)";
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
+            preparedStatement.setInt(3, 0);
+            preparedStatement.setInt(4, 0);
+
 
             int row = preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             System.out.println("Error in thew SQL class: " + e);
         }
+//        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+//
+//            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//
+//            String sql = "INSERT INTO SaveState (Username, InGamePoints, TotalTimePlayed, Username) VALUES (?,?)";
+//
+//            ResultSet rs = stmt.executeQuery(sql);
+//            PreparedStatement preparedStatement = con.prepareStatement(sql);
+//
+//            while (rs.next()) {
+//                if (username.equals(rs.getString("Username"))) {
+//
+//                    preparedStatement.setString(1,rs.getString("SavID") );
+//                    preparedStatement.setString(2, "0");
+//                    preparedStatement.setString(2, "0");
+//                    preparedStatement.setString(4, username);
+//
+//                }
+//            }
+//
+//
+//
+//            int row = preparedStatement.executeUpdate();
+//
+//        } catch (Exception e) {
+//            System.out.println("Error in thew SQL class: " + e);
+//        }
 
     }
 
@@ -73,7 +116,7 @@ public class Main {
         boolean usernamevalid = false;
         boolean passwordvalid = false;
 
-        String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
