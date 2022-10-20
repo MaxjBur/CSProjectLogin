@@ -11,6 +11,7 @@ public class UI {
     Font arial_40, arial_80B;
     BufferedImage heart_full,heart_half,heart_blank;
     BufferedImage keyImage;
+    public int commandNum = 0;
 
     double playTime;
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");
@@ -31,6 +32,11 @@ public class UI {
         //TITLESTATE
         if(gp.gameState == gp.titleState){
             drawTitleScreen();
+        }
+        //PLAYSTATE
+        if (gp.gameState == gp.playState){
+            drawPlayScreen();
+
         }
     }
     public void drawTitleScreen(){
@@ -54,17 +60,24 @@ public class UI {
         x = getXforCenteredText(text);
         y += gp.tileSize*3.5;
         g2.drawString(text,x,y);
-//        if(commandNum == 0) {
-//            g2.drawString(">",x-gp.tileSize,y);
-//        }
+        if(commandNum == 0) {
+            g2.drawString(">",x-gp.tileSize,y);
+        }
 
         text = "QUIT";
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text,x,y);
-//        if(commandNum == 2) {
-//            g2.drawString(">",x-gp.tileSize,y);
-//        }
+        if(commandNum == 1) {
+            g2.drawString(">",x-gp.tileSize,y);
+        }
+    }
+    public void drawPlayScreen(){
+        g2.setColor(new Color(135,206,235));
+        g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
+        g2.setColor(new Color(86,125,70));
+        g2.fillRect(0,0,gp.screenWidth, gp.screenHeight/2);
+
     }
     public int getXforCenteredText(String text){
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();

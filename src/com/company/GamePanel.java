@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int FPS = 60;
     //SYSTEM
     public UI ui = new UI(this);
+    public KeyHandler keyH = new KeyHandler(this);
     //public TileManager tileM = new TileManager(this);
     Thread gameThread;
 
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        //this.addKeyListener(keyH);
+        this.addKeyListener(keyH);
         this.setFocusable(true);
     }
     public void startGameThread(){
@@ -91,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
         else if(gameState == playState){
+            ui.draw(g2);
 
         }
     }
