@@ -38,6 +38,10 @@ public class UI {
             drawPlayScreen();
 
         }
+        //PAUSESTATE
+        if (gp.gameState == gp.pauseState){
+            drawPauseScreen();
+        }
     }
     public void drawTitleScreen(){
         g2.setColor(new Color(0,0,0));
@@ -76,8 +80,35 @@ public class UI {
         g2.setColor(new Color(135,206,235));
         g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
         g2.setColor(new Color(86,125,70));
-        g2.fillRect(0,0,gp.screenWidth, gp.screenHeight/2);
+        g2.fillRect(0,gp.screenHeight/2,gp.screenWidth, gp.screenHeight);
 
+    }
+    public void drawPauseScreen(){
+        g2.setColor(new Color(235,235,235));
+        g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
+        g2.setColor(new Color(0,0,0));
+        String text = "Pause";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize*3;
+        // SHADOW COLOUR
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
+        text = "Settings";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*3.5;
+        g2.drawString(text,x,y);
+        if(commandNum == 0) {
+            g2.drawString(">",x-gp.tileSize,y);
+        }
+        text = "Quit";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text,x,y);
+        if(commandNum == 1) {
+            g2.drawString(">",x-gp.tileSize,y);
+        }
     }
     public int getXforCenteredText(String text){
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();

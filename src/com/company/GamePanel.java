@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int titleState = 1;
     public int playState = 2;
     public int objectState = 3;
+    public int pauseState = 4;
 
     public void setupGame(){
         gameState = titleState;
@@ -92,6 +93,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
         else if(gameState == playState){
+            ui.draw(g2);
+
+        }
+        else if(gameState == pauseState){
             ui.draw(g2);
 
         }

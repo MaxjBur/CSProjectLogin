@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.util.Scanner;
 import java.sql.*;
 
+import static javax.swing.text.StyleConstants.getComponent;
+
 public class Main {
     public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
 
@@ -56,6 +58,11 @@ public class Main {
         gamePanel.setupGame();
         gamePanel.startGameThread();
         System.out.println("Game");
+
+        Movement mv = new Movement(getComponent());
+
+
+
 
     }
 
