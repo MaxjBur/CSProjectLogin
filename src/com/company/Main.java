@@ -1,13 +1,20 @@
 package com.company;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Scanner;
 import java.sql.*;
 
 import static javax.swing.text.StyleConstants.getComponent;
 
-public class Main {
+public class Main extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
     public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
+    JLabel label;
+    Point startPoint;
+    GamePanel gamePanel = new GamePanel();
 
     public static void main(String[] args) throws Exception {
         Connection con = DriverManager.getConnection("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
@@ -43,6 +50,8 @@ public class Main {
 
             }
         }
+
+
         System.out.println("MENU");
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,11 +68,27 @@ public class Main {
         gamePanel.startGameThread();
         System.out.println("Game");
 
-        Movement mv = new Movement(getComponent());
 
 
 
 
+
+
+    }
+
+    public void move() {
+        Movement mv = new Movement(getComponents());
+
+    }
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt){
+        ImageIcon imageIcon = new ImageIcon("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin1//res//src//company//res//Walk 1 down.png");
+        label =new JLabel(imageIcon);
+        label.setVisible(true);
+        label.addMouseListener(this);
+        label.addMouseMotionListener(this);
+        gamePanel.add(label);
+        gamePanel.revalidate();
+        gamePanel.repaint();
     }
 
     public static void writeToDatabase(String username, String password) throws SQLException {
@@ -168,4 +193,51 @@ public class Main {
 
     }
 
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+        startPoint = SwingUtilities.convertPoint(label, mouseEvent.getPoint(), label.getParent());
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+        startPoint = null;
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+        Point location = SwingUtilities.convertPoint(label, mouseEvent.getPoint(), label.getParent());
+        if(label.getParent().getBounds().contains(location)){
+            Point newLocation = label.getLocation();
+            newLocation.translate(location.x - startPoint.x,location.y-startPoint.y);
+            newLocation.x = Math.max(newLocation.x, 0);
+            newLocation.y = Math.max(newLocation.y, 0);
+            newLocation.x = Math.min(newLocation.x,label.getParent().getWidth()-label.getWidth());
+            newLocation.y = Math.min(newLocation.y,label.getParent().getHeight()-label.getHeight());
+            label.setLocation(newLocation);
+            startPoint = location;
+        }
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
+
+    }
 }
