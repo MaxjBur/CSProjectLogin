@@ -43,7 +43,11 @@ public class KeyHandler implements KeyListener {
                         gp.gameState = gp.playState;
                     }
                     if(gp.ui.commandNum == 1){
+                        gp.gameState = gp.quitState;
+                        System.out.println("hi");
                         System.exit(0);
+
+
 
                     }
 
@@ -68,6 +72,7 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.playState;
                 }
                 if(gp.ui.commandNum == 1){
+                    gp.gameState=gp.quitState;
                     System.exit(0);
 
                 }

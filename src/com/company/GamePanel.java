@@ -33,6 +33,8 @@ public class GamePanel extends JPanel implements Runnable {
     public int objectState = 3;
     public int pauseState = 4;
 
+    public int quitState = 5;
+
     public void setupGame(){
         gameState = titleState;
         aSetter.setNPC();

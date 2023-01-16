@@ -4,16 +4,20 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
+import static jdk.nashorn.internal.objects.Global.print;
+
 public class UI {
 
     GamePanel gp;
     Graphics2D g2;
+
     Font arial_40, arial_80B;
     BufferedImage heart_full,heart_half,heart_blank;
     BufferedImage keyImage;
     public int commandNum = 0;
 
-    double playTime;
+    public double playTime;
+
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
     public UI(GamePanel gp) {
@@ -35,13 +39,25 @@ public class UI {
         }
         //PLAYSTATE
         if (gp.gameState == gp.playState){
+            playTime +=(double) 1/60;
             drawPlayScreen();
 
         }
         //PAUSESTATE
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
+
         }
+        //QUITSTATE
+        if (gp.gameState == gp.quitState){
+
+
+            quitGame();
+
+        }
+    }
+    public void quitGame(){
+        print(playTime);
     }
     public void drawTitleScreen(){
         g2.setColor(new Color(0,0,0));

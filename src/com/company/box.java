@@ -2,24 +2,27 @@ package com.company;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import com.company.Entity;
+import com.company.GamePanel;
 
 public class box extends Entity{
     public box(GamePanel gp) {
         super(gp);
+        direction = "down";
         speed = 1;
-        getImage();
+        //getImage();
 
     }
     public void getImage() {
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/Walk 1 down.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("C:/Users/MaxJa/IdeaProjects/CSProjectLogin/src/com/company/res/Walk 1 down.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
         }
 
         catch(IOException e){
