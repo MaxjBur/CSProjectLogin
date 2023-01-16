@@ -11,13 +11,16 @@ import java.sql.*;
 import static javax.swing.text.StyleConstants.getComponent;
 
 public class Main extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
-    public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
+    //public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
+    public  static String DatabaseLocation = ("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin//logintable.accdb");
+
     JLabel label;
     Point startPoint;
     GamePanel gamePanel = new GamePanel();
 
     public static void main(String[] args) throws Exception {
-        Connection con = DriverManager.getConnection("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
+       // Connection con = DriverManager.getConnection("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
+        Connection con = DriverManager.getConnection("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin//logintable.accdb");
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM userLogin");
         while (rs.next())
@@ -28,6 +31,15 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         Scanner scanner = new Scanner(System.in);
         boolean startGame = false;
         while (startGame == false) {
+            int npcMood = 1;
+            int gameID = 1;
+            int npcID = 1;
+            int npcAge = 1;
+            int life = 5;
+            String nPCFirstName = "Max";
+            //writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
+            writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
+            writeGameToDatabase();
 
             System.out.println("Would you like to create an account (1) or login (2) ");
             int menuChoice = scanner.nextInt();
@@ -44,7 +56,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
                 String username = scanner.next();
                 System.out.println("Please choose a new password");
                 String password = scanner.next();
-                writeToDatabase(username, password);
+                writeUserToDatabase(username, password);
 
             } else {
 
@@ -91,7 +103,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         gamePanel.repaint();
     }
 
-    public static void writeToDatabase(String username, String password) throws SQLException {
+    public static void writeUserToDatabase(String username, String password) throws SQLException {
         //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
@@ -142,6 +154,115 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 //        }
 
     }
+    public static void writeNPCToDatabase(String nPCfirstName, int nPCMood, int GameID, int nPCID,  int nPCAge, int life) throws SQLException {
+        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            String sql = "INSERT INTO GameNPCLink ( NPCFirstName, NPCMood, GameID, NPCID, NPCAge, Life) VALUES (?,?,?,?,?,?)";
+
+
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+            preparedStatement.setString(1, nPCfirstName);
+            preparedStatement.setInt(2, nPCMood);
+            preparedStatement.setInt(3, 1);
+            preparedStatement.setInt(4, 1);
+            preparedStatement.setInt(5, nPCAge);
+            preparedStatement.setInt(6, life);
+
+
+            int row = preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Error in thew SQL class: " + e);
+        }
+
+//        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+//
+//            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//
+//            String sql = "INSERT INTO SaveState (Username, InGamePoints, TotalTimePlayed, Username) VALUES (?,?)";
+//
+//            ResultSet rs = stmt.executeQuery(sql);
+//            PreparedStatement preparedStatement = con.prepareStatement(sql);
+//
+//            while (rs.next()) {
+//                if (username.equals(rs.getString("Username"))) {
+//
+//                    preparedStatement.setString(1,rs.getString("SavID") );
+//                    preparedStatement.setString(2, "0");
+//                    preparedStatement.setString(2, "0");
+//                    preparedStatement.setString(4, username);
+//
+//                }
+//            }
+//
+//
+//
+//            int row = preparedStatement.executeUpdate();
+//
+//        } catch (Exception e) {
+//            System.out.println("Error in thew SQL class: " + e);
+//        }
+
+    }
+    public static void writeGameToDatabase() throws SQLException {
+        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            String sql = "INSERT INTO Game ( Time, ObjectsPlaced, Currency) VALUES (?,?,?)";
+
+
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, 1);
+            preparedStatement.setInt(3, 10);
+
+
+
+            int row = preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Error in thew SQL class: " + e);
+        }
+
+//        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+//
+//            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//
+//            String sql = "INSERT INTO SaveState (Username, InGamePoints, TotalTimePlayed, Username) VALUES (?,?)";
+//
+//            ResultSet rs = stmt.executeQuery(sql);
+//            PreparedStatement preparedStatement = con.prepareStatement(sql);
+//
+//            while (rs.next()) {
+//                if (username.equals(rs.getString("Username"))) {
+//
+//                    preparedStatement.setString(1,rs.getString("SavID") );
+//                    preparedStatement.setString(2, "0");
+//                    preparedStatement.setString(2, "0");
+//                    preparedStatement.setString(4, username);
+//
+//                }
+//            }
+//
+//
+//
+//            int row = preparedStatement.executeUpdate();
+//
+//        } catch (Exception e) {
+//            System.out.println("Error in thew SQL class: " + e);
+//        }
+
+    }
+
 
     public static boolean checkLogin(String username, String password) {
         boolean valid = false;

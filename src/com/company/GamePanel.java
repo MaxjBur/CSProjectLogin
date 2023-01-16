@@ -13,12 +13,18 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize*maxScreenCol; // 768 pixels
     public final int screenHeight = tileSize*maxScreenRow; // 576 pixels
+
+    public AssetSetter aSetter = new AssetSetter(this);
     public int FPS = 60;
     //SYSTEM
     public UI ui = new UI(this);
     public KeyHandler keyH = new KeyHandler(this);
     //public TileManager tileM = new TileManager(this);
     Thread gameThread;
+
+
+
+    public Entity npc[]= new Entity[10];
 
     //GAME STATE
     public int gameState;
@@ -29,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame(){
         gameState = titleState;
+        aSetter.setNPC();
     }
 
     public GamePanel() {
