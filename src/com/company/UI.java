@@ -16,7 +16,7 @@ public class UI {
     BufferedImage keyImage;
     public int commandNum = 0;
 
-    public double playTime;
+
 
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
@@ -39,7 +39,9 @@ public class UI {
         }
         //PLAYSTATE
         if (gp.gameState == gp.playState){
-            playTime +=(double) 1/60;
+            gp.playTime += 1;
+            System.out.println(gp.playTime);
+
             drawPlayScreen();
 
         }
@@ -52,12 +54,12 @@ public class UI {
         if (gp.gameState == gp.quitState){
 
 
-            quitGame();
+
 
         }
     }
     public void quitGame(){
-        print(playTime);
+
     }
     public void drawTitleScreen(){
         g2.setColor(new Color(0,0,0));

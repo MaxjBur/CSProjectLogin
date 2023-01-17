@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
 
+import static jdk.nashorn.internal.objects.Global.print;
+
 public class KeyHandler implements KeyListener {
     GamePanel gp;
 
@@ -23,6 +25,9 @@ public class KeyHandler implements KeyListener {
         Random random = new Random();
 
         int code = e.getKeyCode();
+
+
+
         //TITLE STATE
         if (gp.gameState == gp.titleState) {
             if ((code == KeyEvent.VK_W)||(code == KeyEvent.VK_S)) {
@@ -45,6 +50,8 @@ public class KeyHandler implements KeyListener {
                     if(gp.ui.commandNum == 1){
                         gp.gameState = gp.quitState;
                         System.out.println("hi");
+                        //print (UI.playTime);
+                        System.out.println(gp.playTime/60);
                         System.exit(0);
 
 
@@ -73,6 +80,9 @@ public class KeyHandler implements KeyListener {
                 }
                 if(gp.ui.commandNum == 1){
                     gp.gameState=gp.quitState;
+                    //print (UI.playTime);
+                    System.out.println(gp.playTime/60);
+
                     System.exit(0);
 
                 }
