@@ -104,6 +104,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
         else if(gameState == playState){
             ui.draw(g2);
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    //npc[i].draw(g2);
+                }
+
+            }
 
         }
         else if(gameState == pauseState){

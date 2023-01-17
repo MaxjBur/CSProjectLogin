@@ -2,12 +2,15 @@ package com.company;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 import java.util.Random;
+import java.util.Scanner;
 
 import static jdk.nashorn.internal.objects.Global.print;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
+    Scanner scanner = new Scanner(System.in);
 
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
@@ -63,6 +66,29 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.playState){
             if(code == KeyEvent.VK_P) {
                 gp.gameState = gp.pauseState;
+            }
+            if(code == KeyEvent.VK_1){
+                gp.npc[0] = new box(gp);
+                System.out.println("What is this box name?");
+                String npcname = scanner.next();
+                System.out.println("How old is box?");
+                scanner.next();
+                int npcage = Integer.parseInt(scanner.next());
+
+
+                try {
+                    Main.writeNPCToDatabase(npcname,1,npcage,5,1);
+                } catch (SQLException ex) {
+                    //throw new RuntimeException(ex);
+                    System.out.println("failed");
+                }
+
+            }
+            if(code == KeyEvent.VK_1){
+
+            }
+            if(code == KeyEvent.VK_1){
+
             }
 
         }

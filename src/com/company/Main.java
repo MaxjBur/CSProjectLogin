@@ -38,7 +38,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
             int life = 5;
             String nPCFirstName = "Max";
             //writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
-            writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
+            //writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
             writeGameToDatabase();
 
             System.out.println("Would you like to create an account (1) or login (2) ");
@@ -154,7 +154,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 //        }
 
     }
-    public static void writeNPCToDatabase(String nPCfirstName, int nPCMood, int GameID, int nPCID,  int nPCAge, int life) throws SQLException {
+    public static void writeNPCToDatabase(String nPCfirstName, int GameID,  int nPCAge, int life, int nPCID) throws SQLException {
         //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
@@ -167,9 +167,9 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
             preparedStatement.setString(1, nPCfirstName);
-            preparedStatement.setInt(2, nPCMood);
+            preparedStatement.setInt(2, 1);
             preparedStatement.setInt(3, 1);
-            preparedStatement.setInt(4, 1);
+            preparedStatement.setInt(4, nPCID);
             preparedStatement.setInt(5, nPCAge);
             preparedStatement.setInt(6, life);
 

@@ -40,7 +40,7 @@ public class UI {
         //PLAYSTATE
         if (gp.gameState == gp.playState){
             gp.playTime += 1;
-            System.out.println(gp.playTime);
+
 
             drawPlayScreen();
 
