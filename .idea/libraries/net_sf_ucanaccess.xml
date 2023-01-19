@@ -1,6 +1,10 @@
 <component name="libraryTable">
   <library name="net.sf.ucanaccess" type="repository">
     <properties maven-id="net.sf.ucanaccess:ucanaccess:5.0.1" />
+    <ANNOTATIONS>
+      <root url="file://$PROJECT_DIR$/../ComputerScienceProject/src/res" />
+      <root url="file://$PROJECT_DIR$/src/res" />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/net/sf/ucanaccess/ucanaccess/5.0.1/ucanaccess-5.0.1.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/hsqldb/hsqldb/2.5.0/hsqldb-2.5.0.jar!/" />

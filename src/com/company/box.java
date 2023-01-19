@@ -15,14 +15,23 @@ public class box extends Entity{
     }
     public void getImage() {
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("res/Key.png"));
+//            up1 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            up2 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            down1 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            down2 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            left1 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            left2 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            right1 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+//            right2 = ImageIO.read(getClass().getClassLoader().getResource("res/Key.png"));
+
         }
 
         catch(IOException e){

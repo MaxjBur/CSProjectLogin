@@ -2,7 +2,7 @@ package com.company;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -54,7 +54,8 @@ public class KeyHandler implements KeyListener {
                         gp.gameState = gp.quitState;
                         System.out.println("hi");
                         //print (UI.playTime);
-                        System.out.println(gp.playTime/60);
+                        System.out.println(Main.playTime/60);
+                        Main.updateTime();
                         System.exit(0);
 
 
@@ -108,6 +109,9 @@ public class KeyHandler implements KeyListener {
                     gp.gameState=gp.quitState;
                     //print (UI.playTime);
                     System.out.println(gp.playTime/60);
+                    Main.updateTime();
+
+
 
                     System.exit(0);
 
@@ -119,6 +123,8 @@ public class KeyHandler implements KeyListener {
 
         }
     }
+
+
 
     @Override
     public void keyReleased(KeyEvent e) {

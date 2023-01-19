@@ -39,7 +39,7 @@ public class UI {
         }
         //PLAYSTATE
         if (gp.gameState == gp.playState){
-            gp.playTime += 1;
+            Main.playTime += 1;
 
 
             drawPlayScreen();
