@@ -69,20 +69,28 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.pauseState;
             }
             if(code == KeyEvent.VK_1){
-                gp.npc[0] = new box(gp);
+
                 System.out.println("What is this box name?");
                 String npcname = scanner.next();
                 System.out.println("How old is box?");
-                scanner.next();
-                int npcage = Integer.parseInt(scanner.next());
+                int npcage = scanner.nextInt();
+                System.out.println("what?");
 
 
                 try {
-                    Main.writeNPCToDatabase(npcname,1,npcage,5,1);
+                    Main.writeNPCToDatabase(npcname,1,npcage,5,1,gp.ObjectNPCNo);
                 } catch (SQLException ex) {
                     //throw new RuntimeException(ex);
                     System.out.println("failed");
                 }
+                gp.npc[gp.ObjectNPCNo] = new box(gp);
+                gp.npc[gp.ObjectNPCNo].worldX = 10;
+                gp.npc[gp.ObjectNPCNo].worldY = 20;
+                while (gp.npc[gp.ObjectNPCNo].worldY<150){
+                    gp.npc[gp.ObjectNPCNo].worldY++;
+                }
+                gp.ObjectNPCNo++;
+
 
             }
             if(code == KeyEvent.VK_1){

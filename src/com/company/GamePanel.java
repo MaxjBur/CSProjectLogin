@@ -8,6 +8,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16; // 16x16 tile - Default size of Characters/NPCs
     final int scale = 3;
     public int playTime = 0;
+    public int ObjectNPCNo=0;
 
     public final int tileSize = originalTileSize*scale; // 48x48 tile - Actual tile size that is displayed on game screen
     public final int maxScreenCol = 16;

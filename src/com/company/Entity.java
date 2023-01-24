@@ -61,7 +61,7 @@ public class Entity {
 //                    break;
 //            }
 
-            g2.drawImage(image,20,20, gp.tileSize, gp.tileSize,null);
+            g2.drawImage(image,worldX,worldY, gp.tileSize, gp.tileSize,null);
         }
 
     }

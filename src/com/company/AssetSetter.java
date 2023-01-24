@@ -9,9 +9,7 @@ public class AssetSetter {
 
     }
     public void setNPC() {
-        gp.npc[0] = new box(gp);
-        gp.npc[0].worldX = gp.tileSize * 19;
-        gp.npc[0].worldY = gp.tileSize * 21;
+
 
     }
 

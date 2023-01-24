@@ -17,6 +17,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
     public static int playTime = 0;
     public static int gameIDint;
 
+
     JLabel label;
     Point startPoint;
     GamePanel gamePanel = new GamePanel();
@@ -144,14 +145,14 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
 
     }
-    public static void writeNPCToDatabase(String nPCfirstName, int GameID,  int nPCAge, int life, int nPCID) throws SQLException {
+    public static void writeNPCToDatabase(String nPCfirstName, int GameID,  int nPCAge, int life, int nPCID, int npcNo) throws SQLException {
         //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
 
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            String sql = "INSERT INTO GameNPCLink ( NPCFirstName, NPCMood, GameID, NPCID, NPCAge, Life) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO GameNPCLink ( NPCFirstName, NPCMood, GameID, NPCID, NPCAge, Life, NPCNo) VALUES (?,?,?,?,?,?,?)";
 
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -162,6 +163,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
             preparedStatement.setInt(4, nPCID);
             preparedStatement.setInt(5, nPCAge);
             preparedStatement.setInt(6, life);
+            preparedStatement.setInt(7, npcNo);
 
 
             int row = preparedStatement.executeUpdate();
