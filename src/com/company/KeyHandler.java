@@ -86,9 +86,7 @@ public class KeyHandler implements KeyListener {
                 gp.npc[gp.ObjectNPCNo] = new box(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
-                while (gp.npc[gp.ObjectNPCNo].worldY<150){
-                    gp.npc[gp.ObjectNPCNo].worldY++;
-                }
+
                 gp.ObjectNPCNo++;
 
 

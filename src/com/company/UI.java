@@ -40,6 +40,16 @@ public class UI {
         //PLAYSTATE
         if (gp.gameState == gp.playState){
             Main.playTime += 1;
+            for (int i = 0; i <gp.ObjectNPCNo ; i++) {
+                if (gp.npc[i]==null) {
+                    System.out.println(".");
+                }else{
+                    if (gp.npc[i].worldY < 400) {
+                        gp.npc[i].worldY++;
+                    }
+                }
+
+            }
 
 
             drawPlayScreen();
