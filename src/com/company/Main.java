@@ -228,6 +228,51 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
 
     }
+    public static int checkBaseHealth(int npcID) {
+        int health= 100;
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT * FROM NPC WHERE NPCID = \""+npcID+"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                health = rs.getInt("MaxLife");
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("QuError in the SQL clase: " + e);
+        }
+        return health;
+    }
+    public static int checkHealth(int npcNo) {
+        int health= 100;
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT * FROM GameNPCLink WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                health = rs.getInt("Life");
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("QuError in the SQL clase: " + e);
+        }
+        return health;
+    }
+    public static void updateHealth(int npcNo) throws SQLException{
+
+        try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "UPDATE GameNPCLink SET Life = \""+(checkHealth(npcNo)-5)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            int rs = stmt.executeUpdate(sql);
+
+
+        } catch (Exception e) {
+            System.out.println("MError in the SQL clase: " + e);
+        }
+
+    }
     public static void deleteNPCObjectLink(){
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);

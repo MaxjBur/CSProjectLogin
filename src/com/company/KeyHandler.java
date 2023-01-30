@@ -78,7 +78,7 @@ public class KeyHandler implements KeyListener {
 
 
                 try {
-                    Main.writeNPCToDatabase(npcname,1,npcage,5,1,gp.ObjectNPCNo);
+                    Main.writeNPCToDatabase(npcname,1,npcage,Main.checkBaseHealth(1),1,gp.ObjectNPCNo);
                 } catch (SQLException ex) {
                     //throw new RuntimeException(ex);
                     System.out.println("failed");
@@ -86,7 +86,15 @@ public class KeyHandler implements KeyListener {
                 gp.npc[gp.ObjectNPCNo] = new box(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
-
+                while (gp.npc[gp.ObjectNPCNo].worldY<150){
+                    gp.npc[gp.ObjectNPCNo].worldY++;
+                }
+                try{
+                    System.out.println(Main.checkHealth(gp.ObjectNPCNo));
+                    Main.updateHealth(gp.ObjectNPCNo);
+                }catch (SQLException ex){
+                    System.out.println("Failed");
+                }
                 gp.ObjectNPCNo++;
 
 
