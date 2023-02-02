@@ -186,9 +186,9 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setInt(2, 1);
-            preparedStatement.setInt(3, 10);
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setInt(2, 0);
+            preparedStatement.setInt(3, 0);
 
 
 
@@ -265,6 +265,18 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "UPDATE GameNPCLink SET Life = \""+(checkHealth(npcNo)-5)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            int rs = stmt.executeUpdate(sql);
+
+
+        } catch (Exception e) {
+            System.out.println("MError in the SQL clase: " + e);
+        }
+
+    }
+    public static void updateObjectsPlaced(int objectsPlaced){
+        try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "UPDATE Game SET ObjectsPlaced = \""+objectsPlaced+"\" WHERE GameID = \""+gameID+"\"";
             int rs = stmt.executeUpdate(sql);
 
 

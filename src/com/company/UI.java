@@ -2,6 +2,7 @@ package com.company;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 import static jdk.nashorn.internal.objects.Global.print;
@@ -42,10 +43,23 @@ public class UI {
             Main.playTime += 1;
             for (int i = 0; i <gp.ObjectNPCNo ; i++) {
                 if (gp.npc[i]==null) {
-                    System.out.println(".");
+
                 }else{
                     if (gp.npc[i].worldY < 400) {
                         gp.npc[i].worldY++;
+                        gp.npc[i].worldY++;
+                    }
+                    else if (gp.npc[i].worldY==400){
+                        try{
+                            //System.out.println(Main.checkHealth(gp.ObjectNPCNo));
+                            Main.updateHealth(i);
+                        }catch (SQLException ex){
+                            System.out.println("Failed");
+                        }
+                        System.out.println("400");
+                    }
+                    if (Main.checkHealth(i)<= 0){
+                        gp.npc[i]=null;
                     }
                 }
 
@@ -108,7 +122,7 @@ public class UI {
         g2.setColor(new Color(135,206,235));
         g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
         g2.setColor(new Color(86,125,70));
-        g2.fillRect(0,gp.screenHeight/2,gp.screenWidth, gp.screenHeight);
+        g2.fillRect(0,440,gp.screenWidth, gp.screenHeight);
 
     }
     public void drawPauseScreen(){
