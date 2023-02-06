@@ -51,14 +51,26 @@ public class UI {
                     }
                     else if (gp.npc[i].worldY==400){
                         try{
-                            //System.out.println(Main.checkHealth(gp.ObjectNPCNo));
-                            Main.updateHealth(i);
+                            if (gp.npc[i].fallDamage!=1){
+                                Main.updateHealth(i,5);
+                                Main.updateMood(i,10);
+                                System.out.println("Mood is "+Main.checkMood(i)+"/100");
+                                gp.npc[i].fallDamage=1;
+
+                                //Main.updateHealth(i,1);
+                            }
+                            else {
+                                gp.npc[i].worldX++;
+                            }
                         }catch (SQLException ex){
                             System.out.println("Failed");
                         }
-                        System.out.println("400");
+
                     }
                     if (Main.checkHealth(i)<= 0){
+                        gp.npc[i]=null;
+                    }
+                    else if (gp.npc[i].worldX==gp.screenWidth+gp.tileSize){
                         gp.npc[i]=null;
                     }
                 }

@@ -12,7 +12,8 @@ import static javax.swing.text.StyleConstants.getComponent;
 
 public class Main extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
     //public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
-    public  static String DatabaseLocation = ("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin//logintable.accdb");
+//    public  static String DatabaseLocation = ("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin//logintable.accdb");
+    public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin0602//logintable.accdb");
     public static String gameID;
     public static int playTime = 0;
     public static int gameIDint;
@@ -110,8 +111,8 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
     }
     private void buttonActionPerformed(java.awt.event.ActionEvent evt){
-        ImageIcon imageIcon = new ImageIcon("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin1//res//src//company//res//Walk 1 down.png");
-        label =new JLabel(imageIcon);
+        //ImageIcon imageIcon = new ImageIcon("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin1//res//src//company//res//Walk 1 down.png");
+        //label =new JLabel(imageIcon);
         label.setVisible(true);
         label.addMouseListener(this);
         label.addMouseMotionListener(this);
@@ -145,6 +146,21 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
 
     }
+    public static void newNPC (int NPCNO, int NPCID){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What is this npc name?");
+        String npcname = scanner.next();
+        System.out.println("How old is npc?");
+        int npcage = scanner.nextInt();
+        System.out.println("what?");
+
+
+        try {
+            Main.writeNPCToDatabase(npcname,Main.gameIDint,npcage,Main.checkBaseHealth(NPCID),NPCID,NPCNO);
+        } catch (SQLException ex) {
+            System.out.println("failed");
+        }
+    }
     public static void writeNPCToDatabase(String nPCfirstName, int GameID,  int nPCAge, int life, int nPCID, int npcNo) throws SQLException {
         //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
@@ -158,7 +174,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
             preparedStatement.setString(1, nPCfirstName);
-            preparedStatement.setInt(2, 1);
+            preparedStatement.setInt(2, 100-nPCAge);
             preparedStatement.setInt(3, gameIDint);
             preparedStatement.setInt(4, nPCID);
             preparedStatement.setInt(5, nPCAge);
@@ -260,11 +276,41 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return health;
     }
-    public static void updateHealth(int npcNo) throws SQLException{
+    public static int checkMood(int npcNo) {
+        int mood= 100;
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT * FROM GameNPCLink WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                mood = rs.getInt("NPCMood");
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("QuError in the SQL clase: " + e);
+        }
+        return mood;
+    }
+    public static void updateMood(int npcNo, int moodChange) throws SQLException{
 
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "UPDATE GameNPCLink SET Life = \""+(checkHealth(npcNo)-5)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            String sql = "UPDATE GameNPCLink SET NPCMood = \""+(checkMood(npcNo)-moodChange)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            int rs = stmt.executeUpdate(sql);
+
+
+        } catch (Exception e) {
+            System.out.println("MError in the SQL clase: " + e);
+        }
+
+
+    }
+    public static void updateHealth(int npcNo, int damage) throws SQLException{
+
+        try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "UPDATE GameNPCLink SET Life = \""+(checkHealth(npcNo)-damage)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
             int rs = stmt.executeUpdate(sql);
 
 

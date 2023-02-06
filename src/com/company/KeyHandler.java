@@ -69,43 +69,51 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.pauseState;
             }
             if(code == KeyEvent.VK_1){
+                Main.newNPC(gp.ObjectNPCNo,1);
 
-                System.out.println("What is this box name?");
-                String npcname = scanner.next();
-                System.out.println("How old is box?");
-                int npcage = scanner.nextInt();
-                System.out.println("what?");
-
-
-                try {
-                    Main.writeNPCToDatabase(npcname,1,npcage,Main.checkBaseHealth(1),1,gp.ObjectNPCNo);
-                } catch (SQLException ex) {
-                    //throw new RuntimeException(ex);
-                    System.out.println("failed");
-                }
+//                System.out.println("What is this npc name?");
+//                String npcname = scanner.next();
+//                System.out.println("How old is npc?");
+//                int npcage = scanner.nextInt();
+//                System.out.println("what?");
+//
+//
+//                try {
+//                    Main.writeNPCToDatabase(npcname,Main.gameIDint,npcage,Main.checkBaseHealth(1),1,gp.ObjectNPCNo);
+//                } catch (SQLException ex) {
+//                    System.out.println("failed");
+//                }
                 gp.npc[gp.ObjectNPCNo] = new box(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
-//                while (gp.npc[gp.ObjectNPCNo].worldY<150){
-//                    gp.npc[gp.ObjectNPCNo].worldY++;
-//                }
-//                try{
-//                    System.out.println(Main.checkHealth(gp.ObjectNPCNo));
-//                    Main.updateHealth(gp.ObjectNPCNo);
-//                }catch (SQLException ex){
-//                    System.out.println("Failed");
-//                }
                 gp.ObjectNPCNo++;
                 Main.updateObjectsPlaced(gp.ObjectNPCNo);
 
 
             }
-            if(code == KeyEvent.VK_1){
+            if(code == KeyEvent.VK_2){
+                Main.newNPC(gp.ObjectNPCNo,2);
+
+//                System.out.println("What is this npc name?");
+//                String npcname = scanner.next();
+//                System.out.println("How old is npc?");
+//                int npcage = scanner.nextInt();
+//                System.out.println("what?");
+//
+//
+//                try {
+//                    Main.writeNPCToDatabase(npcname,Main.gameIDint,npcage,Main.checkBaseHealth(1),1,gp.ObjectNPCNo);
+//                } catch (SQLException ex) {
+//                    System.out.println("failed");
+//                }
+                gp.npc[gp.ObjectNPCNo] = new human(gp);
+                gp.npc[gp.ObjectNPCNo].worldX = 10+gp.tileSize;
+                gp.npc[gp.ObjectNPCNo].worldY = 20;
+                gp.ObjectNPCNo++;
+                Main.updateObjectsPlaced(gp.ObjectNPCNo);
 
             }
-            if(code == KeyEvent.VK_1){
 
-            }
 
         }
         if (gp.gameState == gp.pauseState){
