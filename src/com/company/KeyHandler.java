@@ -86,6 +86,7 @@ public class KeyHandler implements KeyListener {
                 gp.npc[gp.ObjectNPCNo] = new box(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
+                gp.npc[gp.ObjectNPCNo].npc=0;
                 gp.ObjectNPCNo++;
                 Main.updateObjectsPlaced(gp.ObjectNPCNo);
 
@@ -109,9 +110,19 @@ public class KeyHandler implements KeyListener {
                 gp.npc[gp.ObjectNPCNo] = new human(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10+gp.tileSize;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
+                gp.npc[gp.ObjectNPCNo].npc=0;
                 gp.ObjectNPCNo++;
                 Main.updateObjectsPlaced(gp.ObjectNPCNo);
 
+            }
+            if(code == KeyEvent.VK_9){
+                Main.newObject(gp.ObjectNPCNo,1);
+                gp.npc[gp.ObjectNPCNo] = new Tree(gp);
+                gp.npc[gp.ObjectNPCNo].worldX = 10+2*gp.tileSize;
+                gp.npc[gp.ObjectNPCNo].worldY = 20;
+                gp.npc[gp.ObjectNPCNo].npc=1;
+                gp.ObjectNPCNo++;
+                Main.updateObjectsPlaced(gp.ObjectNPCNo);
             }
 
 

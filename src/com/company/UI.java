@@ -28,59 +28,82 @@ public class UI {
         arial_80B = new Font("Arial", Font.BOLD, 80);
     }
 
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2) {
         this.g2 = g2;
 
         g2.setFont(arial_40);
         g2.setColor(Color.WHITE);
 
         //TITLESTATE
-        if(gp.gameState == gp.titleState){
+        if (gp.gameState == gp.titleState) {
             drawTitleScreen();
         }
         //PLAYSTATE
-        if (gp.gameState == gp.playState){
+        if (gp.gameState == gp.playState) {
             Main.playTime += 1;
-            for (int i = 0; i <gp.ObjectNPCNo ; i++) {
-                if (gp.npc[i]==null) {
+            for (int i = 0; i < gp.ObjectNPCNo; i++) {
+                if (gp.npc[i] == null) {
 
-                }else{
+                } else {
                     if (gp.npc[i].worldY < 400) {
-                        gp.npc[i].worldY++;
-                        gp.npc[i].worldY++;
-                    }
-                    else if (gp.npc[i].worldY==400){
-                        try{
-                            if (gp.npc[i].fallDamage!=1){
-                                Main.updateHealth(i,5);
-                                Main.updateMood(i,10);
-                                System.out.println("Mood is "+Main.checkMood(i)+"/100");
-                                gp.npc[i].fallDamage=1;
 
-                                //Main.updateHealth(i,1);
+                        gp.npc[i].worldY++;
+                        gp.npc[i].worldY++;
+
+                    } else if (gp.npc[i].worldY == 400) {
+
+                        if (gp.npc[i].fallDamage != 1) {
+                            if (gp.npc[i].npc == 1) {
+                                try {
+
+                                    Main.updateObjectHealth(i, 5);
+                                } catch (SQLException ex) {
+                                    System.out.println("Mailed");
+                                }
+                            } else if (gp.npc[i].npc == 0) {
+                                try {
+                                    Main.updateHealth(i, 5);
+                                    Main.updateMood(i, 10);
+                                    System.out.println("Mood is " + Main.checkMood(i) + "/100");
+                                } catch (SQLException ex) {
+                                    System.out.println("grailed");
+                                }
                             }
-                            else {
+//                                Main.updateObjectHealth(i,5);
+//                                Main.updateHealth(i,5);
+//                                Main.updateMood(i,10);
+
+                            gp.npc[i].fallDamage = 1;
+
+                            //Main.updateHealth(i,1);
+                        } else {
+                            if (gp.npc[i].npc == 0) {
                                 gp.npc[i].worldX++;
                             }
-                        }catch (SQLException ex){
-                            System.out.println("Failed");
                         }
+                    }
 
-                    }
-                    if (Main.checkHealth(i)<= 0){
-                        gp.npc[i]=null;
-                    }
-                    else if (gp.npc[i].worldX==gp.screenWidth+gp.tileSize){
-                        gp.npc[i]=null;
+
+                    if (Main.checkNPCHealth(i) <= 0) {
+                        gp.npc[i] = null;
+                    } else if (Main.checkObjectHealth(i) <= 0) {
+                        gp.npc[i] = null;
+
+                    } else if (gp.npc[i].npc == 0) {
+
+                        if (gp.npc[i].worldX == gp.screenWidth + gp.tileSize) {
+                            gp.npc[i] = null;
+                        }
                     }
                 }
-
             }
 
 
-            drawPlayScreen();
 
+            drawPlayScreen();
         }
+
+
         //PAUSESTATE
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();

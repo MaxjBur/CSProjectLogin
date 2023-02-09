@@ -9,6 +9,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 3;
     public int playTime = 0;
     public int ObjectNPCNo=0;
+    public int ObjectNo=0;
+    public int NPCNo=0;
 
     public final int tileSize = originalTileSize*scale; // 48x48 tile - Actual tile size that is displayed on game screen
     public final int maxScreenCol = 16;
@@ -27,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public Entity npc[]= new Entity[10];
+
 
     //GAME STATE
     public int gameState;

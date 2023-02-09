@@ -158,7 +158,22 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         try {
             Main.writeNPCToDatabase(npcname,Main.gameIDint,npcage,Main.checkBaseHealth(NPCID),NPCID,NPCNO);
         } catch (SQLException ex) {
-            System.out.println("failed");
+            System.out.println("tailed");
+        }
+    }
+    public static void newObject (int NPCNO, int ObjectID){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("How old is npc?");
+        int objectage = scanner.nextInt();
+
+        System.out.println("what?");
+
+
+        try {
+            Main.writeObjectToDatabase(ObjectID,objectage,Main.gameIDint,Main.checkBaseObjectHealth(ObjectID),NPCNO);
+        } catch (SQLException ex) {
+            System.out.println("snailed");
         }
     }
     public static void writeNPCToDatabase(String nPCfirstName, int GameID,  int nPCAge, int life, int nPCID, int npcNo) throws SQLException {
@@ -180,6 +195,36 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
             preparedStatement.setInt(5, nPCAge);
             preparedStatement.setInt(6, life);
             preparedStatement.setInt(7, npcNo);
+
+
+            int row = preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Error in thew SQL class: " + e);
+        }
+
+
+    }
+    public static void writeObjectToDatabase(int ObjectID, int ObjectAge,  int Id, int life, int NPCNo) throws SQLException {
+        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            String sql = "INSERT INTO GameObjectLink ( ObjectID, Age,Weight, GameID, Life, ObjectNo) VALUES (?,?,?,?,?,?)";
+
+
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+            preparedStatement.setInt(1, ObjectID);
+            preparedStatement.setInt(2, ObjectAge);
+            preparedStatement.setInt(3, 5);
+            preparedStatement.setInt(4, gameIDint);
+            preparedStatement.setInt(5, life);
+            preparedStatement.setInt(6, NPCNo);
+
+
 
 
             int row = preparedStatement.executeUpdate();
@@ -260,11 +305,43 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return health;
     }
-    public static int checkHealth(int npcNo) {
+    public static int checkBaseObjectHealth(int objecrID) {
+        int health= 100;
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT * FROM Object WHERE ObjectID = \""+objecrID+"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                health = rs.getInt("MaxLife");
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("QuError in the SQL clase: " + e);
+        }
+        return health;
+    }
+    public static int checkNPCHealth(int npcNo) {
         int health= 100;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "SELECT * FROM GameNPCLink WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                health = rs.getInt("Life");
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("QuError in the SQL clase: " + e);
+        }
+        return health;
+    }
+    public static int checkObjectHealth(int npcNo) {
+        int health= 100;
+        try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT * FROM GameObjectLink WHERE GameID = \""+gameID+"\" AND ObjectNo = \""+npcNo+"\"";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 health = rs.getInt("Life");
@@ -310,7 +387,20 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "UPDATE GameNPCLink SET Life = \""+(checkHealth(npcNo)-damage)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            String sql = "UPDATE GameNPCLink SET Life = \""+(checkNPCHealth(npcNo)-damage)+"\" WHERE GameID = \""+gameID+"\" AND NPCNo = \""+npcNo+"\"";
+            int rs = stmt.executeUpdate(sql);
+
+
+        } catch (Exception e) {
+            System.out.println("MError in the SQL clase: " + e);
+        }
+
+    }
+    public static void updateObjectHealth(int npcNo, int damage) throws SQLException{
+
+        try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "UPDATE GameObjectLink SET Life = \""+(checkObjectHealth(npcNo)-damage)+"\" WHERE GameID = \""+gameID+"\" AND ObjectNo = \""+npcNo+"\"";
             int rs = stmt.executeUpdate(sql);
 
 
