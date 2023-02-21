@@ -98,6 +98,17 @@ public class KeyHandler implements KeyListener {
                 gp.ObjectNPCNo++;
                 Main.updateObjectsPlaced(gp.ObjectNPCNo);
             }
+            if(code == KeyEvent.VK_8){ //creates house
+                Main.newObject(gp.ObjectNPCNo,2);
+                gp.npc[gp.ObjectNPCNo] = new house(gp);
+                gp.npc[gp.ObjectNPCNo].worldX = 10+3*gp.tileSize;
+                gp.npc[gp.ObjectNPCNo].worldY = 20;
+                gp.npc[gp.ObjectNPCNo].npc=1;
+                gp.entitiesCreated[gp.ObjectNPCNo][0]="house";
+                gp.entitiesCreated[gp.ObjectNPCNo][1]= String.valueOf(gp.playTime/60);
+                gp.ObjectNPCNo++;
+                Main.updateObjectsPlaced(gp.ObjectNPCNo);
+            }
             if(code == KeyEvent.VK_5){
                 System.out.println("What time was the entity you wanted created?");
                 int time = scanner.nextInt();
