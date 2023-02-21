@@ -10,13 +10,14 @@ import java.sql.*;
 
 import static javax.swing.text.StyleConstants.getComponent;
 
-public class Main extends javax.swing.JFrame implements MouseListener, MouseMotionListener {
+public class Main extends javax.swing.JFrame{ //implements MouseListener, MouseMotionListener {
     //public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
-//    public  static String DatabaseLocation = ("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin//logintable.accdb");
-    public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin0602//logintable.accdb");
+   public  static String DatabaseLocation = ("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin1302//logintable.accdb");
+//    public  static String DatabaseLocation = ("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin0602//logintable.accdb");
     public static String gameID;
     public static int playTime = 0;
     public static int gameIDint;
+
 
 
     JLabel label;
@@ -24,32 +25,18 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
     GamePanel gamePanel = new GamePanel();
 
     public static void main(String[] args) throws Exception {
-       // Connection con = DriverManager.getConnection("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb");
-//        Connection con = DriverManager.getConnection("jdbc:ucanaccess://C://Users//MaxJa//IdeaProjects//CSProjectLogin//logintable.accdb");
-//        Statement stmt = con.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT * FROM userLogin");
-//
-//        while (rs.next())
-//            System.out.println(rs.getString("Username") + " " + rs.getString("Password"));
-//        con.close();
+
 
 
 
         Scanner scanner = new Scanner(System.in);
         boolean startGame = false;
         while (startGame == false) {
-//            int npcMood = 1;
-//
-//            int npcID = 1;
-//            int npcAge = 1;
-//            int life = 5;
-//            String nPCFirstName = "Max";
-            //writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
-            //writeNPCToDatabase(nPCFirstName, npcMood,gameID, npcID,npcAge,life);
+
             writeGameToDatabase();
             Main.gameID = checkGameID();
-            gameIDint = Integer.parseInt(gameID);
-            System.out.println("A total time of "+sumOfTime()+" has been played on this device");
+            gameIDint = Integer.parseInt(gameID); //gameIDint is the value of gameID in the Game tableso it can be used to store things later on in the code
+            System.out.println("A total time of "+sumOfTime()+" has been played on this device"); //This is a use of aggregate functions
 
             System.out.println("Would you like to create an account (1) or login (2) ");
             int menuChoice = scanner.nextInt();
@@ -77,11 +64,12 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
                 writeUserToDatabase(username, hashedPassword);
 
             } else {
+                System.out.println("Incorrect option");
 
             }
         }
 
-
+        //This creates the window
         System.out.println("MENU");
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,23 +94,10 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
     }
 
-    public void move() {
-        Movement mv = new Movement(getComponents());
 
-    }
-    private void buttonActionPerformed(java.awt.event.ActionEvent evt){
-        //ImageIcon imageIcon = new ImageIcon("jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//CSProjectLogin1//res//src//company//res//Walk 1 down.png");
-        //label =new JLabel(imageIcon);
-        label.setVisible(true);
-        label.addMouseListener(this);
-        label.addMouseMotionListener(this);
-        gamePanel.add(label);
-        gamePanel.revalidate();
-        gamePanel.repaint();
-    }
 
     public static void writeUserToDatabase(String username, String password) throws SQLException {
-        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+        //This adds the users username and password to the database
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
 
@@ -146,13 +121,47 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
 
     }
-    public static void newNPC (int NPCNO, int NPCID){
+    public static void findTimeCreated(int time, String[][] entitiesCreated,int objectMade){
+        int last = objectMade;
+        int first = 0;
+        int middle = (first + last)/2;
+        while(first<=last){
+            if (Integer.parseInt(entitiesCreated[middle][1])<time){
+                first = middle + 1;
+            } else if (Integer.parseInt(entitiesCreated[middle][1])==time) {
+                System.out.println("The entity at that time is "+entitiesCreated[middle][0]);
+                break;
+            }else {
+                last = middle--;
+            }
+            middle = (first + last)/2;
+
+        }
+        if(first>last){
+            System.out.println("Incorrect value given");
+        }
+        String Name = "0";
+
+    }
+
+    public static void newNPC (int NPCNO, int NPCID){ //This function gets the details of the NPC from the user and runs the method that adds them to the database
         Scanner scanner = new Scanner(System.in);
+        int npcage=0;
         System.out.println("What is this npc name?");
         String npcname = scanner.next();
-        System.out.println("How old is npc?");
-        int npcage = scanner.nextInt();
-        System.out.println("what?");
+
+        boolean loop = false;
+        while (!loop) {
+            try {
+                System.out.println("How old is npc?");
+                scanner.next();
+                npcage = scanner.nextInt();
+                loop = true;
+            }catch (Exception e){
+                System.out.println("Please Provide an Integer as an Age");
+            }
+        }
+
 
 
         try {
@@ -161,13 +170,21 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
             System.out.println("tailed");
         }
     }
-    public static void newObject (int NPCNO, int ObjectID){
+    public static void newObject (int NPCNO, int ObjectID){ //this method works the same as newNPC but for objects
         Scanner scanner = new Scanner(System.in);
+        int objectage = 0;
 
-        System.out.println("How old is npc?");
-        int objectage = scanner.nextInt();
-
-        System.out.println("what?");
+        boolean loop = false;
+        while (!loop) {
+            try {
+                System.out.println("How old is npc?");
+                scanner.next();
+                objectage = scanner.nextInt();
+                loop = true;
+            } catch (Exception e) {
+                System.out.println("Please Provide an Integer as an Age");
+            }
+        }
 
 
         try {
@@ -177,7 +194,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
     }
     public static void writeNPCToDatabase(String nPCfirstName, int GameID,  int nPCAge, int life, int nPCID, int npcNo) throws SQLException {
-        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+        //This adds the NPC details to the database
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
 
@@ -206,7 +223,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
     }
     public static void writeObjectToDatabase(int ObjectID, int ObjectAge,  int Id, int life, int NPCNo) throws SQLException {
-        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+        //This writes the object details to the database
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
 
@@ -236,7 +253,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
     }
     public static void writeGameToDatabase() throws SQLException {
-        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
+        //This creates a new blank row in the Game table when the game is booted up
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
 
@@ -260,7 +277,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
 
     }
-    public static String checkGameID() {
+    public static String checkGameID() { //gets the value of the gameID for this run
         String gameID= "";
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -276,7 +293,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return gameID;
     }
-    public static void updateTime(){
+    public static void updateTime(){ //updates the time played when te user exits the program
 
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -289,7 +306,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
 
     }
-    public static int checkBaseHealth(int npcID) {
+    public static int checkBaseHealth(int npcID) { //Finds the health that the type of NPC has
         int health= 100;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -305,7 +322,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return health;
     }
-    public static int checkBaseObjectHealth(int objecrID) {
+    public static int checkBaseObjectHealth(int objecrID) { //Finds the health that the type of object has
         int health= 100;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -321,7 +338,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return health;
     }
-    public static int checkNPCHealth(int npcNo) {
+    public static int checkNPCHealth(int npcNo) { //Checks what the current health is from an npc entity
         int health= 100;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -337,7 +354,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return health;
     }
-    public static int checkObjectHealth(int npcNo) {
+    public static int checkObjectHealth(int npcNo) { //Checks what the current health is for an object entity
         int health= 100;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -353,7 +370,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return health;
     }
-    public static int checkMood(int npcNo) {
+    public static int checkMood(int npcNo) { //checks the current mood of an NPC entity
         int mood= 100;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -369,7 +386,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
         return mood;
     }
-    public static void updateMood(int npcNo, int moodChange) throws SQLException{
+    public static void updateMood(int npcNo, int moodChange) throws SQLException{ //Changed the NPC entities mood by the integer moodChange given
 
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -383,7 +400,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
 
     }
-    public static void updateHealth(int npcNo, int damage) throws SQLException{
+    public static void updateHealth(int npcNo, int damage) throws SQLException{ // Changes the NPC entities health by the damage given
 
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -396,7 +413,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
 
     }
-    public static void updateObjectHealth(int npcNo, int damage) throws SQLException{
+    public static void updateObjectHealth(int npcNo, int damage) throws SQLException{ //Changes the Object entities health by the damage given
 
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -409,7 +426,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
 
     }
-    public static void updateObjectsPlaced(int objectsPlaced){
+    public static void updateObjectsPlaced(int objectsPlaced){ //Updates the ObjectsPlaced in the Game table whenever a new object is placed
         try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "UPDATE Game SET ObjectsPlaced = \""+objectsPlaced+"\" WHERE GameID = \""+gameID+"\"";
@@ -421,19 +438,8 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         }
 
     }
-    public static void deleteNPCObjectLink(){
-        try (Connection con = DriverManager.getConnection(Main.DatabaseLocation)) {
-            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = "DELETE FROM";
-            int rs = stmt.executeUpdate(sql);
 
-
-        } catch (Exception e) {
-            System.out.println("Error in the SQL clase: " + e);
-        }
-
-    }
-    public static int sumOfTime(){
+    public static int sumOfTime(){ //aggregate function-calculates the total time played in the Game table
         int sum= 0;
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -453,12 +459,10 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
     }
 
 
-    public static boolean checkLogin(String username, String password) {
+    public static boolean checkLogin(String username, String password) { //Checks that the username and password given correspond to an entry in the table
         boolean valid = false;
         boolean usernamevalid = false;
         boolean passwordvalid = false;
-
-        //String DatabaseLocation = "jdbc:ucanaccess://X://Users//MB211187//IdeaProjects//login//logintable.accdb";
 
         try (Connection con = DriverManager.getConnection(DatabaseLocation)) {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -496,7 +500,7 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
         } catch (Exception e) {
             System.out.println("Error in the SQL clase: " + e);
         }
-        if ((usernamevalid) && (passwordvalid)){
+        if ((usernamevalid) && (passwordvalid)){ //Only works if both password and username are valid
             valid = true;
 
 
@@ -505,51 +509,51 @@ public class Main extends javax.swing.JFrame implements MouseListener, MouseMoti
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
+//    @Override
+//    public void mouseClicked(MouseEvent mouseEvent) {
+//
+//    }
+//
+//    @Override
+//    public void mousePressed(MouseEvent mouseEvent) {
+//        startPoint = SwingUtilities.convertPoint(label, mouseEvent.getPoint(), label.getParent());
+//
+//    }
+//
+//    @Override
+//    public void mouseReleased(MouseEvent mouseEvent) {
+//        startPoint = null;
+//
+//    }
+//
+//    @Override
+//    public void mouseEntered(MouseEvent mouseEvent) {
+//
+//    }
+//
+//    @Override
+//    public void mouseExited(MouseEvent mouseEvent) {
+//
+//    }
+//
+//    @Override
+//    public void mouseDragged(MouseEvent mouseEvent) {
+//        Point location = SwingUtilities.convertPoint(label, mouseEvent.getPoint(), label.getParent());
+//        if(label.getParent().getBounds().contains(location)){
+//            Point newLocation = label.getLocation();
+//            newLocation.translate(location.x - startPoint.x,location.y-startPoint.y);
+//            newLocation.x = Math.max(newLocation.x, 0);
+//            newLocation.y = Math.max(newLocation.y, 0);
+//            newLocation.x = Math.min(newLocation.x,label.getParent().getWidth()-label.getWidth());
+//            newLocation.y = Math.min(newLocation.y,label.getParent().getHeight()-label.getHeight());
+//            label.setLocation(newLocation);
+//            startPoint = location;
+//        }
+//
+//    }
+//
+//    @Override
+//    public void mouseMoved(MouseEvent mouseEvent) {
 
-    }
 
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-        startPoint = SwingUtilities.convertPoint(label, mouseEvent.getPoint(), label.getParent());
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        startPoint = null;
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-        Point location = SwingUtilities.convertPoint(label, mouseEvent.getPoint(), label.getParent());
-        if(label.getParent().getBounds().contains(location)){
-            Point newLocation = label.getLocation();
-            newLocation.translate(location.x - startPoint.x,location.y-startPoint.y);
-            newLocation.x = Math.max(newLocation.x, 0);
-            newLocation.y = Math.max(newLocation.y, 0);
-            newLocation.x = Math.min(newLocation.x,label.getParent().getWidth()-label.getWidth());
-            newLocation.y = Math.min(newLocation.y,label.getParent().getHeight()-label.getHeight());
-            label.setLocation(newLocation);
-            startPoint = location;
-        }
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-
-    }
 }

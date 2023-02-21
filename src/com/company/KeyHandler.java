@@ -33,28 +33,19 @@ public class KeyHandler implements KeyListener {
 
         //TITLE STATE
         if (gp.gameState == gp.titleState) {
-            if ((code == KeyEvent.VK_W)||(code == KeyEvent.VK_S)) {
+            if ((code == KeyEvent.VK_W)||(code == KeyEvent.VK_S)) { //this changes the position of the cursor on the screen
                     gp.ui.commandNum--;
                     if(gp.ui.commandNum<0){
                         gp.ui.commandNum=1;
                     }
             }
-//            if (code == KeyEvent.VK_S) {
-//                    gp.ui.commandNum++;
-//                    if (gp.ui.commandNum > 2) {
-//                        gp.ui.commandNum = 0;
 //
-//                    }
-//            }
-            if (code == KeyEvent.VK_ENTER) {
+            if (code == KeyEvent.VK_ENTER) { //this goes to play state if cursor is on new game
                     if(gp.ui.commandNum == 0){
                         gp.gameState = gp.playState;
                     }
-                    if(gp.ui.commandNum == 1){
+                    if(gp.ui.commandNum == 1){ //This does the necessary steps before the game is closed
                         gp.gameState = gp.quitState;
-                        System.out.println("hi");
-                        //print (UI.playTime);
-                        System.out.println(Main.playTime/60);
                         Main.updateTime();
                         System.exit(0);
 
@@ -65,83 +56,71 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (gp.gameState == gp.playState){
-            if(code == KeyEvent.VK_P) {
+            if(code == KeyEvent.VK_P) { //switches to pausing
                 gp.gameState = gp.pauseState;
             }
             if(code == KeyEvent.VK_1){
-                Main.newNPC(gp.ObjectNPCNo,1);
-
-//                System.out.println("What is this npc name?");
-//                String npcname = scanner.next();
-//                System.out.println("How old is npc?");
-//                int npcage = scanner.nextInt();
-//                System.out.println("what?");
-//
-//
-//                try {
-//                    Main.writeNPCToDatabase(npcname,Main.gameIDint,npcage,Main.checkBaseHealth(1),1,gp.ObjectNPCNo);
-//                } catch (SQLException ex) {
-//                    System.out.println("failed");
-//                }
+                Main.newNPC(gp.ObjectNPCNo,1);//creates a new box npc
                 gp.npc[gp.ObjectNPCNo] = new box(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
                 gp.npc[gp.ObjectNPCNo].npc=0;
-                gp.ObjectNPCNo++;
-                Main.updateObjectsPlaced(gp.ObjectNPCNo);
+                gp.entitiesCreated[gp.ObjectNPCNo][0]="box";
+                gp.entitiesCreated[gp.ObjectNPCNo][1]= String.valueOf(gp.playTime/60);
+                gp.ObjectNPCNo++; //increments objectnpcno (total amount of entities placed)
+                Main.updateObjectsPlaced(gp.ObjectNPCNo); //updates objectsPlaced in Game table
 
 
             }
             if(code == KeyEvent.VK_2){
-                Main.newNPC(gp.ObjectNPCNo,2);
+                Main.newNPC(gp.ObjectNPCNo,2); //creates human npc
 
-//                System.out.println("What is this npc name?");
-//                String npcname = scanner.next();
-//                System.out.println("How old is npc?");
-//                int npcage = scanner.nextInt();
-//                System.out.println("what?");
 //
-//
-//                try {
-//                    Main.writeNPCToDatabase(npcname,Main.gameIDint,npcage,Main.checkBaseHealth(1),1,gp.ObjectNPCNo);
-//                } catch (SQLException ex) {
-//                    System.out.println("failed");
-//                }
                 gp.npc[gp.ObjectNPCNo] = new human(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10+gp.tileSize;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
                 gp.npc[gp.ObjectNPCNo].npc=0;
+                gp.entitiesCreated[gp.ObjectNPCNo][0]="human";
+                gp.entitiesCreated[gp.ObjectNPCNo][1]= String.valueOf(gp.playTime/60);
                 gp.ObjectNPCNo++;
+
                 Main.updateObjectsPlaced(gp.ObjectNPCNo);
 
             }
-            if(code == KeyEvent.VK_9){
+            if(code == KeyEvent.VK_9){ //creates tree
                 Main.newObject(gp.ObjectNPCNo,1);
                 gp.npc[gp.ObjectNPCNo] = new Tree(gp);
                 gp.npc[gp.ObjectNPCNo].worldX = 10+2*gp.tileSize;
                 gp.npc[gp.ObjectNPCNo].worldY = 20;
                 gp.npc[gp.ObjectNPCNo].npc=1;
+                gp.entitiesCreated[gp.ObjectNPCNo][0]="tree";
+                gp.entitiesCreated[gp.ObjectNPCNo][1]= String.valueOf(gp.playTime/60);
                 gp.ObjectNPCNo++;
                 Main.updateObjectsPlaced(gp.ObjectNPCNo);
+            }
+            if(code == KeyEvent.VK_5){
+                System.out.println("What time was the entity you wanted created?");
+                int time = scanner.nextInt();
+                Main.findTimeCreated(time,gp.entitiesCreated,gp.ObjectNPCNo-1);
             }
 
 
         }
         if (gp.gameState == gp.pauseState){
-            if ((code == KeyEvent.VK_W)||(code == KeyEvent.VK_S)) {
+            if ((code == KeyEvent.VK_W)||(code == KeyEvent.VK_S)) { //this cycles the cursor on the pause state
                 gp.ui.commandNum--;
                 if(gp.ui.commandNum<0){
                     gp.ui.commandNum=1;
                 }
             }
 
-            if (code == KeyEvent.VK_ENTER) {
+            if (code == KeyEvent.VK_ENTER) { //resumes game
                 if(gp.ui.commandNum == 0){
                     gp.gameState = gp.playState;
                 }
-                if(gp.ui.commandNum == 1){
+                if(gp.ui.commandNum == 1){ //quits game
                     gp.gameState=gp.quitState;
-                    //print (UI.playTime);
+
                     System.out.println(gp.playTime/60);
                     Main.updateTime();
 

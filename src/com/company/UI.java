@@ -13,13 +13,13 @@ public class UI {
     Graphics2D g2;
 
     Font arial_40, arial_80B;
-    BufferedImage heart_full,heart_half,heart_blank;
-    BufferedImage keyImage;
+
+
     public int commandNum = 0;
 
 
 
-    DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -41,57 +41,53 @@ public class UI {
         //PLAYSTATE
         if (gp.gameState == gp.playState) {
             Main.playTime += 1;
-            for (int i = 0; i < gp.ObjectNPCNo; i++) {
+            for (int i = 0; i < gp.ObjectNPCNo; i++) { //loop repeats for each entity that has been created this game
                 if (gp.npc[i] == null) {
 
                 } else {
-                    if (gp.npc[i].worldY < 400) {
+                    if (gp.npc[i].worldY < 400) { //checks if entity has reached ground yet
 
                         gp.npc[i].worldY++;
                         gp.npc[i].worldY++;
 
                     } else if (gp.npc[i].worldY == 400) {
 
-                        if (gp.npc[i].fallDamage != 1) {
-                            if (gp.npc[i].npc == 1) {
+                        if (gp.npc[i].fallDamage != 1) { //if entity has not taken fall damage
+                            if (gp.npc[i].npc == 1) { //if it is an object entity
                                 try {
 
-                                    Main.updateObjectHealth(i, 5);
+                                    Main.updateObjectHealth(i, 5); //takes 5 fall damage
                                 } catch (SQLException ex) {
                                     System.out.println("Mailed");
                                 }
-                            } else if (gp.npc[i].npc == 0) {
+                            } else if (gp.npc[i].npc == 0) { //if it is an NPC entity
                                 try {
                                     Main.updateHealth(i, 5);
                                     Main.updateMood(i, 10);
-                                    System.out.println("Mood is " + Main.checkMood(i) + "/100");
+                                    System.out.println("Mood is " + Main.checkMood(i) + "/100"); //prints npc mood after taking fall damage
                                 } catch (SQLException ex) {
                                     System.out.println("grailed");
                                 }
                             }
-//                                Main.updateObjectHealth(i,5);
-//                                Main.updateHealth(i,5);
-//                                Main.updateMood(i,10);
+                            gp.npc[i].fallDamage = 1; // Entity has now taken fall damage
 
-                            gp.npc[i].fallDamage = 1;
 
-                            //Main.updateHealth(i,1);
                         } else {
-                            if (gp.npc[i].npc == 0) {
+                            if (gp.npc[i].npc == 0) { //if it is an NPC entity and are on the ground they move off the screen.
                                 gp.npc[i].worldX++;
                             }
                         }
                     }
 
 
-                    if (Main.checkNPCHealth(i) <= 0) {
+                    if (Main.checkNPCHealth(i) <= 0) { //if NPC health is less than 0, they are null
                         gp.npc[i] = null;
-                    } else if (Main.checkObjectHealth(i) <= 0) {
+                    } else if (Main.checkObjectHealth(i) <= 0) { //if object health is less than 0, they are null
                         gp.npc[i] = null;
 
                     } else if (gp.npc[i].npc == 0) {
 
-                        if (gp.npc[i].worldX == gp.screenWidth + gp.tileSize) {
+                        if (gp.npc[i].worldX == gp.screenWidth + gp.tileSize) { //if npc moves off the screen, they are null
                             gp.npc[i] = null;
                         }
                     }
@@ -117,10 +113,8 @@ public class UI {
 
         }
     }
-    public void quitGame(){
 
-    }
-    public void drawTitleScreen(){
+    public void drawTitleScreen(){ //draws the main menu screen
         g2.setColor(new Color(0,0,0));
         g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
         //TITLE NAME
@@ -153,14 +147,14 @@ public class UI {
             g2.drawString(">",x-gp.tileSize,y);
         }
     }
-    public void drawPlayScreen(){
+    public void drawPlayScreen(){ //draws the play screen
         g2.setColor(new Color(135,206,235));
         g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
         g2.setColor(new Color(86,125,70));
         g2.fillRect(0,440,gp.screenWidth, gp.screenHeight);
 
     }
-    public void drawPauseScreen(){
+    public void drawPauseScreen(){ //draws the pause screen
         g2.setColor(new Color(235,235,235));
         g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
@@ -172,7 +166,7 @@ public class UI {
         g2.setColor(Color.gray);
         g2.drawString(text, x+5, y+5);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
-        text = "Settings";
+        text = "Resume";
         x = getXforCenteredText(text);
         y += gp.tileSize*3.5;
         g2.drawString(text,x,y);
@@ -187,7 +181,7 @@ public class UI {
             g2.drawString(">",x-gp.tileSize,y);
         }
     }
-    public int getXforCenteredText(String text){
+    public int getXforCenteredText(String text){ //centres text for main menu and pause screen
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth / 2 - length / 2;
         return x;

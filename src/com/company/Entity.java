@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     GamePanel gp;
-    public int worldX, worldY;
-    public int fallDamage;
-    public int npc;
+    public int worldX, worldY; //the position on the screen for an entity
+    public int fallDamage; //this tracks whether the entity has taken for damage or not so they only receive damage once and ground level
+    public int npc; //This tracks whether the entity is an NPC or an Object
     public String direction;
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
@@ -28,40 +28,6 @@ public class Entity {
         image = up1;
 
 
-//            switch(direction) {
-//                case "up":
-//                    if (spriteNum == 1) {
-//                        image = up1;
-//                    }
-//                    if (spriteNum == 2) {
-//                        image = up2;
-//                    }
-//                    break;
-//                case "down":
-//                    if (spriteNum == 1) {
-//                        image = down1;
-//                    }
-//                    if (spriteNum == 2) {
-//                        image = down2;
-//                    }
-//                    break;
-//                case "left":
-//                    if (spriteNum == 1) {
-//                        image = left1;
-//                    }
-//                    if (spriteNum == 2) {
-//                        image = left2;
-//                    }
-//                    break;
-//                case "right":
-//                    if (spriteNum == 1) {
-//                        image = right1;
-//                    }
-//                    if (spriteNum == 2) {
-//                        image = right2;
-//                    }
-//                    break;
-//            }
 
             g2.drawImage(image,worldX,worldY, gp.tileSize, gp.tileSize,null);
         }

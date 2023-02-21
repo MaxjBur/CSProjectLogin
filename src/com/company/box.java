@@ -16,23 +16,23 @@ public class box extends Entity{
     }
     public void getImage() {
         try {
-            //up1 = ImageIO.read(getClass().getResourceAsStream("ChestShut.png"));
-//            up1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            up2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            down1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            down2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            left1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            left2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            right1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-//            right2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin\\res\\ChestShut.png"));
-            up1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            up2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            down1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            down2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            left1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            left2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            right1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
-            right2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+
+            up1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            up2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            down1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            down2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            left1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            left2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            right1 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+            right2 = ImageIO.read(new File("C:\\Users\\MaxJa\\IdeaProjects\\CSProjectLogin1302\\res\\ChestShut.png"));
+//            up1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            up2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            down1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            down2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            left1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            left2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            right1 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
+//            right2 = ImageIO.read(new File("X:\\Users\\MB211187\\IdeaProjects\\CSProjectLogin0602\\res\\ChestShut.png"));
 
         }
 

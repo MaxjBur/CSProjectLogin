@@ -7,12 +7,12 @@ public class GamePanel extends JPanel implements Runnable {
     //Screen Settings
     final int originalTileSize = 16; // 16x16 tile - Default size of Characters/NPCs
     final int scale = 3;
-    public int playTime = 0;
+    public int playTime = 0; //This is the total time played
     public int ObjectNPCNo=0;
-    public int ObjectNo=0;
-    public int NPCNo=0;
+    public String[][] entitiesCreated = new String[50][2];
 
-    public final int tileSize = originalTileSize*scale; // 48x48 tile - Actual tile size that is displayed on game screen
+
+    public final int tileSize = originalTileSize*scale; // This is the tilesize of the screen
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize*maxScreenCol; // 768 pixels
@@ -32,13 +32,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     //GAME STATE
-    public int gameState;
-    public int titleState = 1;
-    public int playState = 2;
-    public int objectState = 3;
-    public int pauseState = 4;
+    public int gameState; //This is the integer that tracks what gameplay loop the user is in
+    public int titleState = 1; //Main menu
+    public int playState = 2; //gameboard
 
-    public int quitState = 5;
+    public int pauseState = 4; // game is paused
+
+    public int quitState = 5; //user has selected to quit
 
     public void setupGame(){
         gameState = titleState;
